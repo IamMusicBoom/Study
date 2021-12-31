@@ -3,10 +3,14 @@ package com.wma.study.notification;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Binder;
 import android.os.IBinder;
 
+import com.wma.study.LogUtil;
+import com.wma.study.StudyApplication;
+
 public class NotificationService extends Service {
+
+
 
     private NotificationReceiver mReceiver;
 
@@ -17,6 +21,9 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        LogUtil.d("WMA-WMA", "onCreate: ");
+        NotificationUtils notificationUtils = NotificationUtils.getInstance(StudyApplication.getContext());
+        startForeground(1001, notificationUtils.getForegroundNotification());
         mReceiver = new NotificationReceiver(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction(NotificationReceiver.ACTION_SHOW_NORMAL);
@@ -28,6 +35,12 @@ public class NotificationService extends Service {
         filter.addAction(NotificationReceiver.ACTION_SHOW_CUSTOM);
         filter.addAction(NotificationReceiver.ACTION_SHOW_NO_DISMISS);
         filter.addAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
+        filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_1);
+        filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_2);
+        filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_3);
+        filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_4);
+        filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_5);
+        filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_NOTIFICATION);
         registerReceiver(mReceiver, filter);
     }
 

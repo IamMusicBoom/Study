@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/remind_notification_layout"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:layout_marginTop="8dp"
-    android:background="@drawable/dialog_radius_white_shape">
+    android:paddingBottom="10dp"
+    android:background="@drawable/dialog_radius_white_shape"
+    >
 
     <TextView
         android:id="@+id/titleTv"
@@ -46,7 +49,7 @@
         android:text="这里可以放很多内容"
         android:textColor="@color/color_070021" />
 
-    <Button
+    <TextView
         android:id="@+id/goBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,8 +57,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/common_btn_blue_bg"
+        android:background="@drawable/bg_push_button"
         android:paddingStart="16dp"
         android:paddingTop="4dp"
         android:paddingEnd="16dp"

@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -194,8 +195,9 @@ public class NotificationUtils {
                 .setShowWhen(true)
                 .setContentTitle(title)
                 .setContentText(content)
+                .setVibrate(new long[]{2000, 2000})
                 .setContentIntent(activities)
-                .setFullScreenIntent(activities,true)
+                .setFullScreenIntent(activities, true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .build();
@@ -208,29 +210,186 @@ public class NotificationUtils {
         intent.setAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
         PendingIntent activities = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_MUTABLE);
         String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
-        PendingIntent fullPendingIntent = PendingIntent.getActivity(mContext,10,new Intent(),PendingIntent.FLAG_MUTABLE);
+        PendingIntent fullPendingIntent = PendingIntent.getActivity(mContext, 10, new Intent(), PendingIntent.FLAG_MUTABLE);
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         Notification notification = new NotificationCompat.Builder(mContext, channel)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_small_24dp)
+                .setDefaults(Notification.DEFAULT_ALL)
                 .setShowWhen(true)
                 .setContentIntent(activities)
                 .setFullScreenIntent(fullPendingIntent, true)// 可以是一个不消失的通知，需要增加权限 <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
-                .setCustomContentView(remoteViews)
+                .setCustomBigContentView(remoteViews)
+//                .setCustomHeadsUpContentView(remoteViews)
+//                .setVibrate(new long[]{2000,2000})
+//                .setSound(uri)
+//                .setCustomContentView(remoteViews)
+                .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                .setFullScreenIntent(activities, true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build();
         return notification;
     }
 
     public Notification buildCustomNotification(RemoteViews remoteViews) {
+        Intent intent = new Intent();
+        intent.setAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
+        PendingIntent activities = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_MUTABLE);
         String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
         Notification notification = new NotificationCompat.Builder(mContext, channel)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_small_24dp)
                 .setShowWhen(true)
-                .setCustomContentView(remoteViews)
+                .setCustomBigContentView(remoteViews)
+//                .setCustomContentView(remoteViews)
+                .setFullScreenIntent(activities, true)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build();
         return notification;
+    }
+
+    public void showBigLayout1() {
+        RemoteViews superBigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_super_big_push);
+        Intent intent = new Intent();
+        intent.setAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
+        PendingIntent activities = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_MUTABLE);
+        String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
+        Notification notification = new NotificationCompat.Builder(mContext, channel)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_small_24dp)
+                .setShowWhen(true)
+                .setContent(superBigView)
+                .setFullScreenIntent(activities, true)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .build();
+        showNotification(101, notification);
+    }
+
+    public void showBigLayout2() {
+        RemoteViews superBigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_super_big_push);
+        Intent intent = new Intent();
+        intent.setAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
+        PendingIntent activities = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_MUTABLE);
+        String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
+        Notification notification = new NotificationCompat.Builder(mContext, channel)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_small_24dp)
+                .setShowWhen(true)
+                .setCustomContentView(superBigView)
+                .setFullScreenIntent(activities, true)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .build();
+        showNotification(102, notification);
+    }
+
+    public void showBigLayout3() {
+        RemoteViews superBigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_super_big_push);
+        Intent intent = new Intent();
+        intent.setAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
+        PendingIntent activities = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_MUTABLE);
+        String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
+        Notification notification = new NotificationCompat.Builder(mContext, channel)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_small_24dp)
+                .setShowWhen(true)
+                .setCustomBigContentView(superBigView)
+                .setFullScreenIntent(activities, true)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .build();
+        showNotification(103, notification);
+    }
+
+    public void showBigLayout4() {
+        RemoteViews superBigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_super_big_push);
+        Intent intent = new Intent();
+        intent.setAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
+        PendingIntent activities = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_MUTABLE);
+        String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
+        Notification notification = new NotificationCompat.Builder(mContext, channel)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_small_24dp)
+                .setShowWhen(true)
+                .setContent(superBigView)
+                .setCustomContentView(superBigView)
+                .setCustomBigContentView(superBigView)
+                .setFullScreenIntent(activities, true)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .build();
+        showNotification(104, notification);
+    }
+
+    public void showBigLayout5() {
+        RemoteViews superBigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_super_big_push);
+        RemoteViews bigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_big_push);
+        Intent intent = new Intent();
+        intent.setAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
+        PendingIntent activities = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_MUTABLE);
+        String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
+        Notification notification = new NotificationCompat.Builder(mContext, channel)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_small_24dp)
+                .setShowWhen(true)
+                .setCustomContentView(bigView)
+                .setCustomBigContentView(superBigView)
+                .setFullScreenIntent(activities, true)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .build();
+        showNotification(105, notification);
+    }
+
+
+    public void showBigNotification() {
+        int channelLevel = NotificationManager.IMPORTANCE_HIGH;
+        int notificationLevel = Notification.PRIORITY_HIGH;
+
+        RemoteViews superBigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_super_big_push);
+        RemoteViews bigView;
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            channelLevel = NotificationManager.IMPORTANCE_MIN;
+            notificationLevel = Notification.PRIORITY_MIN;
+            bigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_big_push);
+        } else {
+            channelLevel = NotificationManager.IMPORTANCE_HIGH;
+            notificationLevel = Notification.PRIORITY_HIGH;
+            bigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_super_big_push);
+        }
+        Intent intent = new Intent();
+        intent.setAction(NotificationReceiver.ACTION_SHOW_ACTIVITY);
+        PendingIntent fullScreenIntent = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_MUTABLE);
+        String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, channelLevel);// 重要通知
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, channel);
+
+        builder.setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_small_24dp)
+                .setShowWhen(true)
+                .setFullScreenIntent(fullScreenIntent, true)
+                .setCustomContentView(bigView)
+                .setCustomBigContentView(superBigView)
+                .setPriority(notificationLevel);
+        Notification notification = builder.build();
+
+        showNotification(106, notification);
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationManager manager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationChannel notificationChannel = manager.getNotificationChannel(NotificationUtils.HANG_UP_CHANNEL_ID);
+                if (notificationChannel != null) {
+                    int importance = notificationChannel.getImportance();
+                    if (importance < NotificationManager.IMPORTANCE_HIGH) {
+                        fullScreenIntent.send();
+                        return;
+                    }
+                }
+            }
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                fullScreenIntent.send();
+            }
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+
+        }
     }
 
 
@@ -240,9 +399,10 @@ public class NotificationUtils {
     }
 
     public void showActivityNotification() {
-        Intent actionIntent = new Intent(mContext, DialogActivity.class);
-        actionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(actionIntent);
+//        Intent actionIntent = new Intent(mContext, DialogActivity.class);
+//        actionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        mContext.startActivity(actionIntent);
+        DialogActivity.showActivityNotification(mContext);
     }
 
     public void goOpenHangUpToggle() {
@@ -261,5 +421,20 @@ public class NotificationUtils {
         }
         permissionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(permissionIntent);
+    }
+
+
+    public Notification getForegroundNotification() {
+
+        String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
+        Notification notification = new NotificationCompat.Builder(mContext, channel)
+                .setContentTitle("通知栏")
+                .setContentText("通知栏前台服务")
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_small_24dp)
+                .setShowWhen(true)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .build();
+        return notification;
     }
 }

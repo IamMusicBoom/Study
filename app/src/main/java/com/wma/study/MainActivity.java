@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.wma.study.notification.NotificationAdvancedActivity;
 import com.wma.study.notification.NotificationBasicActivity;
+import com.wma.study.notification.NotificationService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

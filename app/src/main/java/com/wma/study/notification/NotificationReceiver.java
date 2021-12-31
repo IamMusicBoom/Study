@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class NotificationReceiver extends BroadcastReceiver {
 
-    public static final String TAG = "NotificationReceiver";
+    public static final String TAG = "WMA-WMA";
 
     private NotificationService mService;
 
@@ -40,6 +40,15 @@ public class NotificationReceiver extends BroadcastReceiver {
     public static final String ACTION_SHOW_NO_DISMISS = "action_show_no_dismiss";
     public static final String ACTION_SHOW_ACTIVITY = "action_show_activity";
 
+    public static final String ACTION_SHOW_BIG_LAYOUT_1 = "action_show_big_layout_1";
+    public static final String ACTION_SHOW_BIG_LAYOUT_2 = "action_show_big_layout_2";
+    public static final String ACTION_SHOW_BIG_LAYOUT_3 = "action_show_big_layout_3";
+    public static final String ACTION_SHOW_BIG_LAYOUT_4 = "action_show_big_layout_4";
+    public static final String ACTION_SHOW_BIG_LAYOUT_5 = "action_show_big_layout_5";
+    public static final String ACTION_SHOW_BIG_NOTIFICATION = "action_show_big_notification";
+
+
+
     public NotificationReceiver(NotificationService mService) {
         this.mService = mService;
         mUtils = NotificationUtils.getInstance(mService.getApplicationContext());
@@ -49,16 +58,16 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         LogUtil.d(TAG, "onReceive: action = " + action);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel notificationChannel = manager.getNotificationChannel(NotificationUtils.HANG_UP_CHANNEL_ID);
-            if(notificationChannel != null){
-                int importance = notificationChannel.getImportance();
-                if (importance < NotificationManager.IMPORTANCE_HIGH) {
-                    mUtils.goOpenHangUpToggle();
-                }
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//            NotificationChannel notificationChannel = manager.getNotificationChannel(NotificationUtils.HANG_UP_CHANNEL_ID);
+//            if (notificationChannel != null) {
+//                int importance = notificationChannel.getImportance();
+//                if (importance < NotificationManager.IMPORTANCE_HIGH) {
+//                    mUtils.goOpenHangUpToggle();
+//                }
+//            }
+//        }
         if (ACTION_SHOW_NORMAL.equals(action)) {
             Notification notification = mUtils.buildNormalNotification("标题", "内容");
             mUtils.showNotification(NotificationUtils.NORMAL_NOTIFICATION_ID, notification);
@@ -87,6 +96,18 @@ public class NotificationReceiver extends BroadcastReceiver {
             mUtils.showNotification(NotificationUtils.NO_DISMISS_NOTIFICATION_ID, notification);
         } else if (ACTION_SHOW_ACTIVITY.equals(action)) {
             mUtils.showActivityNotification();
+        } else if (ACTION_SHOW_BIG_LAYOUT_1.equals(action)) {
+            mUtils.showBigLayout1();
+        } else if (ACTION_SHOW_BIG_LAYOUT_2.equals(action)) {
+            mUtils.showBigLayout2();
+        } else if (ACTION_SHOW_BIG_LAYOUT_3.equals(action)) {
+            mUtils.showBigLayout3();
+        } else if (ACTION_SHOW_BIG_LAYOUT_4.equals(action)) {
+            mUtils.showBigLayout4();
+        } else if (ACTION_SHOW_BIG_LAYOUT_5.equals(action)) {
+            mUtils.showBigLayout5();
+        } else if (ACTION_SHOW_BIG_NOTIFICATION.equals(action)) {
+            mUtils.showBigNotification();
         }
 
     }

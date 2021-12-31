@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/dialog_radius_white_shape"
+    android:layout_height="56dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/icon_duplicate_clean_on" />
+
+
+    <TextView
+        android:id="@+id/tv_push_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="#FF4279F8"
+        tools:text=", wasting space. Clean up now!, wasting space. Clean up now!, wasting space. Clean up now!" />
+
+    <TextView
+        android:id="@+id/tv_push_button"
+        android:layout_width="70dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="10dp"
+        android:background="#FF4279F8"
+        android:gravity="center"
+        android:text="立即清理"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+
+
+
+</LinearLayout>

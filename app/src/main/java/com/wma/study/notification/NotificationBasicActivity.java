@@ -21,15 +21,13 @@ public class NotificationBasicActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         Intent serviceIntent = new Intent(this, NotificationService.class);
-        startService(serviceIntent);
-
         bindService(serviceIntent, conn, BIND_AUTO_CREATE);
     }
 
     ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            if(iBinder instanceof NotificationBinder){
+            if (iBinder instanceof NotificationBinder) {
                 NotificationBinder binder = ((NotificationBinder) iBinder);
                 mService = binder.getService();
             }
@@ -55,6 +53,12 @@ public class NotificationBasicActivity extends AppCompatActivity implements View
             sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_IN_BOX));
         } else if (view.getId() == R.id.btn_notification_show_hang_up) {
             sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_HANG_UP));
+        } else if (view.getId() == R.id.btn_notification_show_custom) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_CUSTOM));
+        } else if (view.getId() == R.id.btn_notification_show_no_dismiss) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_NO_DISMISS));
+        } else if (view.getId() == R.id.btn_notification_show_activity) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_ACTIVITY));
         }
     }
 }

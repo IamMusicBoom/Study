@@ -21,14 +21,13 @@ public class NotificationAdvancedActivity extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_advanced);
         Intent serviceIntent = new Intent(this, NotificationService.class);
-        startService(serviceIntent);
         bindService(serviceIntent, conn, BIND_AUTO_CREATE);
     }
 
     ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            if(iBinder instanceof NotificationBinder){
+            if (iBinder instanceof NotificationBinder) {
                 NotificationBinder binder = ((NotificationBinder) iBinder);
                 mService = binder.getService();
             }
@@ -42,14 +41,18 @@ public class NotificationAdvancedActivity extends AppCompatActivity implements V
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_notification_show_hang_up) {
-            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_HANG_UP));
-        } else if (view.getId() == R.id.btn_notification_show_custom) {
-            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_CUSTOM));
-        } else if (view.getId() == R.id.btn_notification_show_no_dismiss) {
-            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_NO_DISMISS));
-        } else if (view.getId() == R.id.btn_notification_show_activity) {
-            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_ACTIVITY));
+        if (view.getId() == R.id.btn_notification_show_big_layout_1) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_1));
+        } else if (view.getId() == R.id.btn_notification_show_big_layout_2) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_2));
+        } else if (view.getId() == R.id.btn_notification_show_big_layout_3) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_3));
+        } else if (view.getId() == R.id.btn_notification_show_big_layout_4) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_4));
+        } else if (view.getId() == R.id.btn_notification_show_big_layout_5) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_5));
+        } else if (view.getId() == R.id.btn_notification_show_big_notification_in_all_version) {
+            sendBroadcast(new Intent(NotificationReceiver.ACTION_SHOW_BIG_NOTIFICATION));
         }
     }
 }
