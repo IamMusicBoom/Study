@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.wma.study.cross_process.LocalActivity;
 import com.wma.study.notification.NotificationAdvancedActivity;
 import com.wma.study.notification.NotificationBasicActivity;
 import com.wma.study.notification.NotificationService;
@@ -22,8 +23,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.btn_notification_basic) {
             startActivity(new Intent(this, NotificationBasicActivity.class));
-        }else if(view.getId() == R.id.btn_notification_advanced){
+        } else if (view.getId() == R.id.btn_notification_advanced) {
             startActivity(new Intent(this, NotificationAdvancedActivity.class));
+        } else if (view.getId() == R.id.btn_cross_process) {
+            startActivity(new Intent(this, LocalActivity.class));
         }
     }
 }
