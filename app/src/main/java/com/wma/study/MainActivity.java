@@ -10,6 +10,7 @@ import com.wma.study.cross_process.LocalActivity;
 import com.wma.study.notification.NotificationAdvancedActivity;
 import com.wma.study.notification.NotificationBasicActivity;
 import com.wma.study.notification.NotificationService;
+import com.wma.study.notification.NotificationSummaryActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, NotificationBasicActivity.class));
         } else if (view.getId() == R.id.btn_notification_advanced) {
             startActivity(new Intent(this, NotificationAdvancedActivity.class));
+        } else if (view.getId() == R.id.btn_notification_summary) {
+            startActivity(new Intent(this, NotificationSummaryActivity.class));
         } else if (view.getId() == R.id.btn_cross_process) {
             startActivity(new Intent(this, LocalActivity.class));
         }

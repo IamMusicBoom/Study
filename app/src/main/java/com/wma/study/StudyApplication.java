@@ -20,13 +20,15 @@ public class StudyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mStudyApplication = this;
+        ContextHolder.setContext(this.getApplicationContext());
         Intent serviceIntent = new Intent(this, NotificationService.class);
         ContextCompat.startForegroundService(this, serviceIntent);
         LogUtil.d("TAG_WMA", "onCreate: " + Utils.getProcessName(this.getApplicationContext()));
         String processName = Utils.getProcessName(this.getApplicationContext());
-        if(!processName.contains(":")){
+        if (!processName.contains(":")) {
             RemoteService.start(this.getApplicationContext());
         }
+
 
     }
 

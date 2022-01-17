@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -240,9 +241,10 @@ public class NotificationUtils {
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_small_24dp)
                 .setShowWhen(true)
+                .setCustomContentView(remoteViews)
                 .setCustomBigContentView(remoteViews)
 //                .setCustomContentView(remoteViews)
-                .setFullScreenIntent(activities, true)
+//                .setTimeoutAfter(2000)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build();
         return notification;
@@ -366,6 +368,7 @@ public class NotificationUtils {
                 .setFullScreenIntent(fullScreenIntent, true)
                 .setCustomContentView(bigView)
                 .setCustomBigContentView(superBigView)
+                .setTimeoutAfter(2000)
                 .setPriority(notificationLevel);
         Notification notification = builder.build();
 
@@ -436,5 +439,22 @@ public class NotificationUtils {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .build();
         return notification;
+    }
+
+    public void showNetImg(Uri bitmap) {
+        RemoteViews superBigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_super_big_push);
+        RemoteViews bigView = new RemoteViews(mContext.getPackageName(), R.layout.layout_function_reminder_big_push);
+        superBigView.setImageViewUri(R.id.iv_icon, bitmap);
+        bigView.setImageViewUri(R.id.iv_icon, bitmap);
+        String channel = createNotificationChannel(HANG_UP_CHANNEL_ID, HANG_UP_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);// 重要通知
+        Notification notification = new NotificationCompat.Builder(mContext, channel)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_small_24dp)
+                .setShowWhen(true)
+                .setCustomContentView(bigView)
+                .setCustomBigContentView(superBigView)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .build();
+        showNotification(105, notification);
     }
 }

@@ -41,6 +41,7 @@ public class NotificationService extends Service {
         filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_4);
         filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_LAYOUT_5);
         filter.addAction(NotificationReceiver.ACTION_SHOW_BIG_NOTIFICATION);
+        filter.addAction(NotificationReceiver.ACTION_SHOW_NET_IMAGE);
         registerReceiver(mReceiver, filter);
     }
 

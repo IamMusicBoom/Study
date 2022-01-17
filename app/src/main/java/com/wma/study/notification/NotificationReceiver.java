@@ -6,7 +6,11 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -14,10 +18,18 @@ import android.widget.RemoteViews;
 import androidx.annotation.LongDef;
 import androidx.core.app.NotificationCompat;
 
+import com.wma.study.ContextHolder;
 import com.wma.study.LogUtil;
 import com.wma.study.R;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by WMA on 2021/12/27.
@@ -26,9 +38,14 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public static final String TAG = "WMA-WMA";
 
+    private final String imgUrl = "http://www.xinhuanet.com/photo/titlepic/112826/1128262326_1642131076734_title0h.jpg";
+
+
     private NotificationService mService;
 
     private NotificationUtils mUtils;
+
+    public static final String KEY_BITMAP = "key_bitmap";
 
     public static final String ACTION_SHOW_NORMAL = "action_show_normal";
     public static final String ACTION_SHOW_PROGRESS = "action_show_progress";
@@ -46,6 +63,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     public static final String ACTION_SHOW_BIG_LAYOUT_4 = "action_show_big_layout_4";
     public static final String ACTION_SHOW_BIG_LAYOUT_5 = "action_show_big_layout_5";
     public static final String ACTION_SHOW_BIG_NOTIFICATION = "action_show_big_notification";
+    public static final String ACTION_SHOW_NET_IMAGE = "action_show_net_image";
 
 
 
@@ -87,7 +105,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             Notification notification = mUtils.buildHangUpNotification("标题", "内容");
             mUtils.showNotification(NotificationUtils.HANG_UP_NOTIFICATION_ID, notification);
         } else if (ACTION_SHOW_CUSTOM.equals(action)) {
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.notification_custom);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.layout_function_reminder_big_push);
             Notification notification = mUtils.buildCustomNotification(remoteViews);
             mUtils.showNotification(NotificationUtils.CUSTOM_NOTIFICATION_ID, notification);
         } else if (ACTION_SHOW_NO_DISMISS.equals(action)) {
@@ -108,7 +126,58 @@ public class NotificationReceiver extends BroadcastReceiver {
             mUtils.showBigLayout5();
         } else if (ACTION_SHOW_BIG_NOTIFICATION.equals(action)) {
             mUtils.showBigNotification();
+        } else if(ACTION_SHOW_NET_IMAGE.equals(action)){
+           saveImage(imgUrl);
         }
 
     }
+
+
+    private void saveImage(String imgUrl) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(imgUrl);
+                    //打开输入流
+                    InputStream inputStream = null;
+                    inputStream = url.openStream();
+                    //对网上资源进行下载转换位图图片
+                    Bitmap mBitmap = BitmapFactory.decodeStream(inputStream);
+                    saveFile(mBitmap);
+//                    mUtils.showNetImg(mBitmap);
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+
+    /**
+     * 保存图片
+     * @param bm
+     * @throws IOException
+     */
+    public void saveFile(Bitmap bm ) throws IOException {
+        File dirFile = new File(ContextHolder.getContext().getExternalCacheDir().getAbsolutePath());
+        if (!dirFile.exists()) {
+            dirFile.mkdir();
+        }
+        String fileName = UUID.randomUUID().toString() + ".jpg";
+        File myCaptureFile = new File(ContextHolder.getContext().getExternalCacheDir().getAbsolutePath() + "/" + fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+        bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+        bos.flush();
+        bos.close();
+        Uri uri = Uri.parse(myCaptureFile.getAbsolutePath());
+        mUtils.showNetImg(uri);
+//        //把图片保存后声明这个广播事件通知系统相册有新图片到来
+//        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        Uri uri = Uri.fromFile(myCaptureFile);
+//        intent.setData(uri);
+//        context.sendBroadcast(intent);
+    }
+
 }
